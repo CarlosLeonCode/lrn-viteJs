@@ -16,7 +16,7 @@ const OrderCard = ({product, removeProduct}) => {
         <p className="text-sm font-light">{title}</p>
       </div>
       <div>
-        <p className="text-lg font-medium">{price}</p>
+        <p className="text-lg font-medium">${price}</p>
         <TrashIcon className="h-6 w-6 text-black-500 cursor-pointer" onClick={() => removeProduct(id)}/>
       </div>
     </div>

@@ -1,6 +1,8 @@
+// Utils
 import { useContext } from "react";
 import { AppCartContext } from "../../Context";
 import { XCircleIcon } from "@heroicons/react/24/solid";
+import { totalPrice } from "../../Utils";
 // Components
 import Aside from "../Aside";
 import OrderCard from "../OrderCard";
@@ -22,9 +24,18 @@ const CheckoutSideMenu = () => {
           <XCircleIcon className="h-6 w-6 text-black-500" />
         </div>
       </div>
-      {cartProducts.map((product) => (
-        <OrderCard product={product} key={product.id} removeProduct={removeProduct}/>
-      ))}
+      <div>
+        {cartProducts.map((product) => (
+          <OrderCard product={product} key={product.id} removeProduct={removeProduct}/>
+        ))}
+      </div>
+      <div className="border-t-2 mt-3">
+        <p className="flex justify-between mt-6">
+          <span className="font-light">Total:</span>
+          <span className="font-medium text-xl">${totalPrice(cartProducts)}</span>
+        </p>
+      </div>
+
     </Aside>
   );
 };
