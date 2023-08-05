@@ -23,6 +23,9 @@ const AppCartProvider = ({children}) => {
   const openCartDetail = () => setIsCartDetailOpen(true)
   const closeCartDetail = () => setIsCartDetailOpen(false)
 
+  // Orders created
+  const [order, setOrder] = useState([])
+
   useEffect(() => {
     const fetchProducts = async () => {
       const response =  await (await fetch('https://fakestoreapi.com/products')).json()
@@ -49,6 +52,8 @@ const AppCartProvider = ({children}) => {
       isCartDetailOpen,
       openCartDetail,
       closeCartDetail,
+      order,
+      setOrder,
     }}>
       {children}
     </AppCartContext.Provider>
