@@ -26,6 +26,14 @@ const AppCartProvider = ({children}) => {
   // Orders created
   const [order, setOrder] = useState([])
 
+  // Filter products with OnSearch
+  const [onSearchValue, setOnSearchValue] = useState('')
+  const [productsFiltered, setProductsFiltered] = useState([])
+
+  const filterProdsByTitle = (products, title) => {
+    return products?.filter(product => product.title.toLowerCase().includes(title))
+  }
+
   useEffect(() => {
     const fetchProducts = async () => {
       const response =  await (await fetch('https://fakestoreapi.com/products')).json()
@@ -34,6 +42,13 @@ const AppCartProvider = ({children}) => {
     }
     fetchProducts()
   }, [])
+
+  useEffect(() => {
+    if(onSearchValue){
+      const prodsFiltered = filterProdsByTitle(products, onSearchValue)
+      setProductsFiltered(prodsFiltered)
+    }
+  }, [products, onSearchValue])
 
   return (
     <AppCartContext.Provider value={{
@@ -54,6 +69,9 @@ const AppCartProvider = ({children}) => {
       closeCartDetail,
       order,
       setOrder,
+      onSearchValue,
+      setOnSearchValue,
+      productsFiltered,
     }}>
       {children}
     </AppCartContext.Provider>
