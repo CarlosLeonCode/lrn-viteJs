@@ -10,9 +10,9 @@ import MyOrders from "../MyOrders";
 import SignIn from "../SignIn";
 import NotFound from "../NotFound";
 import Jewelery from "../Jewelery";
-import Electronics from "../electronics";
-import Men from "../men";
-import Women from "../women";
+import Electronics from "../Electronics";
+import Men from "../Men";
+import Women from "../Women";
 
 // Components
 import Navbar from "../../Components/Navbar";
