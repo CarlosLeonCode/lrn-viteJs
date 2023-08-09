@@ -5,7 +5,40 @@ import { ShoppingCartIcon } from "@heroicons/react/24/solid";
 
 const Navbar = () => {
   const activeStyle = "underline underline-offset-4";
-  const { count, openCartDetail, setSearchByCategory } = useContext(AppCartContext);
+  const { count, openCartDetail, setSearchByCategory, handleSignOut, signOut } = useContext(AppCartContext);
+  const renderMenu = () => {
+    if(signOut) {
+      return(
+        <li>
+          <NavLink
+            to="/sign-in"
+            className={({ isActive }) => (isActive ? activeStyle : undefined)}
+          >
+            Sign in
+          </NavLink>
+        </li>
+      )
+    } else {
+      return(
+        <>
+          <li className="text-black/40">carlosleoncode@example.com</li>
+          <li>
+            <NavLink to="/my-orders">My Orders</NavLink>
+          </li>
+          <li>
+            <NavLink to="/my-account">My Account</NavLink>
+          </li>
+          <li>
+            <NavLink to="/sign-in"
+              className={({ isActive }) => (isActive ? activeStyle : undefined)}
+              onClick={handleSignOut}
+            >Sign out</NavLink>
+          </li>
+        </>
+      )
+    }
+  }
+
   return (
     <nav className="flex justify-between items-center fixed z-10 w-full py-5 px-8 text-sm font-light top-0 bg-white drop-shadow-md">
       <ul className="flex items-center gap-3">
@@ -59,16 +92,7 @@ const Navbar = () => {
         </li>
       </ul>
       <ul className="flex items-center gap-3">
-        <li className="text-black/40">carlosleoncode@example.com</li>
-        <li>
-          <NavLink to="/my-orders">My Orders</NavLink>
-        </li>
-        <li>
-          <NavLink to="/my-account">My Account</NavLink>
-        </li>
-        <li>
-          <NavLink to="/sign-in">Sign in</NavLink>
-        </li>
+        {renderMenu()}
         <li>
           {
             <ShoppingCartIcon

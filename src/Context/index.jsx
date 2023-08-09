@@ -1,126 +1,147 @@
 // Libs
-import { createContext, useState, useEffect } from "react"
+import { createContext, useState, useEffect } from "react";
 
 // Utils
-import Storage from "../Utils/storage"
+import Storage from "../Utils/storage";
 
-const AppCartContext =  createContext()
-const STORAGEKEY = 'shopData'
+const AppCartContext = createContext();
+const STORAGEKEY = "shopData";
 
-const AppCartProvider = ({children}) => {
-  const [products, setProducts] = useState([])
-  const [count, setCount] = useState(0)
-  const [isLoadingProds, setIsLoadingProd] = useState(true)
+const AppCartProvider = ({ children }) => {
+  const [products, setProducts] = useState([]);
+  const [count, setCount] = useState(0);
+  const [isLoadingProds, setIsLoadingProd] = useState(true);
 
   // Product details
-  const [productDetail, setProductDetail] = useState({})
+  const [productDetail, setProductDetail] = useState({});
 
   // Product detail Open/Close Aside
-  const [isProductDetailOpen, setIsProductDetailOpen] = useState(false)
-  const openProductDetail = () => setIsProductDetailOpen(true)
-  const closeProductDetail = () => setIsProductDetailOpen(false)
+  const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
+  const openProductDetail = () => setIsProductDetailOpen(true);
+  const closeProductDetail = () => setIsProductDetailOpen(false);
 
   // Cart products to buy
-  const [cartProducts, setCartProducts] = useState([])
+  const [cartProducts, setCartProducts] = useState([]);
 
   // Cart detail Open/Close Aside
-  const [isCartDetailOpen, setIsCartDetailOpen] = useState(false)
-  const openCartDetail = () => setIsCartDetailOpen(true)
-  const closeCartDetail = () => setIsCartDetailOpen(false)
+  const [isCartDetailOpen, setIsCartDetailOpen] = useState(false);
+  const openCartDetail = () => setIsCartDetailOpen(true);
+  const closeCartDetail = () => setIsCartDetailOpen(false);
 
   // Orders created
-  const [order, setOrder] = useState([])
+  const [order, setOrder] = useState([]);
 
   // Filter products with OnSearch
-  const [onSearchValue, setOnSearchValue] = useState('')
-  const [productsFiltered, setProductsFiltered] = useState([])
-  
-  const [searchByCategory, setSearchByCategory] = useState('')
+  const [onSearchValue, setOnSearchValue] = useState("");
+  const [productsFiltered, setProductsFiltered] = useState([]);
+
+  const [searchByCategory, setSearchByCategory] = useState("");
 
   const filterProdsByTitle = (products, title) => {
-    return products?.filter(product => product.title.toLowerCase().includes(title))
-  }
+    return products?.filter((product) =>
+      product.title.toLowerCase().includes(title)
+    );
+  };
 
   // Login/Sign up
-  const [account, setAccount] = useState({})
-  const [signOut, setSignOut] = useState(false)
+  const [account, setAccount] = useState(Storage.getItem(STORAGEKEY)?.account);
+  const [signOut, setSignOut] = useState(Storage.getItem(STORAGEKEY)?.signOut);
   // --
   const initStorage = () => {
-    const data = Storage.getItem(STORAGEKEY)
-    if(!data){
+    const data = Storage.getItem(STORAGEKEY);
+    if (!data) {
       let newData = {
-        account: account,
-        signOut: signOut
-      }
-      Storage.setItem(STORAGEKEY, newData)
+        account: {},
+        signOut: true,
+      };
+      Storage.setItem(STORAGEKEY, newData);
     } else {
-      setAccount(data.account)
-      setSignOut(signOut)
+      setAccount(data.account);
+      setSignOut(signOut);
     }
-  }
-
-
+  };
+  // --
   const handleSignOut = () => {
-    const data = Storage.getItem(STORAGEKEY)
-    data.signOut = true
-    Storage.setItem(STORAGEKEY, data)
-    setSignOut(true)
+    const data = Storage.getItem(STORAGEKEY);
+    data.signOut = true;
+    Storage.setItem(STORAGEKEY, data);
+    setSignOut(true);
+  };
+
+  const createAccount = (data) => {
+    const storageData = Storage.getItem(STORAGEKEY);
+    storageData.account = data;
+    Storage.setItem(STORAGEKEY, storageData);
+    setAccount(data);
   }
 
   useEffect(() => {
-    initStorage()
-  }, [])
+    initStorage();
+  }, []);
 
   useEffect(() => {
-    setIsLoadingProd(true)
+    setIsLoadingProd(true);
     const fetchProducts = async () => {
       let response;
-      if(searchByCategory.length > 0){
-        response =  await (await fetch(`https://fakestoreapi.com/products/category/${searchByCategory}`)).json()
+      if (searchByCategory.length > 0) {
+        response = await (
+          await fetch(
+            `https://fakestoreapi.com/products/category/${searchByCategory}`
+          )
+        ).json();
       } else {
-        response =  await (await fetch('https://fakestoreapi.com/products')).json()
+        response = await (
+          await fetch("https://fakestoreapi.com/products")
+        ).json();
       }
-      setProducts(response)
-      setIsLoadingProd(false)
-    }
-    fetchProducts()
-  }, [searchByCategory])
+      setProducts(response);
+      setIsLoadingProd(false);
+    };
+    fetchProducts();
+  }, [searchByCategory]);
 
   useEffect(() => {
-    if(onSearchValue){
-      const prodsFiltered = filterProdsByTitle(products, onSearchValue)
-      setProductsFiltered(prodsFiltered)
+    if (onSearchValue) {
+      const prodsFiltered = filterProdsByTitle(products, onSearchValue);
+      setProductsFiltered(prodsFiltered);
     }
-  }, [products, onSearchValue])
+  }, [products, onSearchValue]);
 
   return (
-    <AppCartContext.Provider value={{
-      products,
-      count,
-      setCount,
-      openProductDetail,
-      closeProductDetail,
-      isProductDetailOpen,
-      setProductDetail,
-      productDetail,
-      isLoadingProds,
-      setIsLoadingProd,
-      cartProducts,
-      setCartProducts,
-      isCartDetailOpen,
-      openCartDetail,
-      closeCartDetail,
-      order,
-      setOrder,
-      onSearchValue,
-      setOnSearchValue,
-      productsFiltered,
-      setProducts,
-      setSearchByCategory,
-    }}>
+    <AppCartContext.Provider
+      value={{
+        products,
+        count,
+        setCount,
+        openProductDetail,
+        closeProductDetail,
+        isProductDetailOpen,
+        setProductDetail,
+        productDetail,
+        isLoadingProds,
+        setIsLoadingProd,
+        cartProducts,
+        setCartProducts,
+        isCartDetailOpen,
+        openCartDetail,
+        closeCartDetail,
+        order,
+        setOrder,
+        onSearchValue,
+        setOnSearchValue,
+        productsFiltered,
+        setProducts,
+        setSearchByCategory,
+        account,
+        setAccount,
+        signOut,
+        handleSignOut,
+        createAccount,
+      }}
+    >
       {children}
     </AppCartContext.Provider>
-  )
-}
+  );
+};
 
-export { AppCartContext, AppCartProvider }
+export { AppCartContext, AppCartProvider };
