@@ -1,6 +1,11 @@
+// Libs
 import { createContext, useState, useEffect } from "react"
 
+// Utils
+import Storage from "../Utils/storage"
+
 const AppCartContext =  createContext()
+const STORAGEKEY = 'shopData'
 
 const AppCartProvider = ({children}) => {
   const [products, setProducts] = useState([])
@@ -35,6 +40,36 @@ const AppCartProvider = ({children}) => {
   const filterProdsByTitle = (products, title) => {
     return products?.filter(product => product.title.toLowerCase().includes(title))
   }
+
+  // Login/Sign up
+  const [account, setAccount] = useState({})
+  const [signOut, setSignOut] = useState(false)
+  // --
+  const initStorage = () => {
+    const data = Storage.getItem(STORAGEKEY)
+    if(!data){
+      let newData = {
+        account: account,
+        signOut: signOut
+      }
+      Storage.setItem(STORAGEKEY, newData)
+    } else {
+      setAccount(data.account)
+      setSignOut(signOut)
+    }
+  }
+
+
+  const handleSignOut = () => {
+    const data = Storage.getItem(STORAGEKEY)
+    data.signOut = true
+    Storage.setItem(STORAGEKEY, data)
+    setSignOut(true)
+  }
+
+  useEffect(() => {
+    initStorage()
+  }, [])
 
   useEffect(() => {
     setIsLoadingProd(true)
