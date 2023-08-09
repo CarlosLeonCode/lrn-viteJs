@@ -55,9 +55,6 @@ const AppCartProvider = ({ children }) => {
         signOut: true,
       };
       Storage.setItem(STORAGEKEY, newData);
-    } else {
-      setAccount(data.account);
-      setSignOut(signOut);
     }
   };
   // --
@@ -67,12 +64,20 @@ const AppCartProvider = ({ children }) => {
     Storage.setItem(STORAGEKEY, data);
     setSignOut(true);
   };
+  // --
+  const handleLogIn = () => {
+    const data = Storage.getItem(STORAGEKEY);
+    data.signOut = false;
+    Storage.setItem(STORAGEKEY, data);
+    setSignOut(false);
+  }
 
   const createAccount = (data) => {
     const storageData = Storage.getItem(STORAGEKEY);
     storageData.account = data;
     Storage.setItem(STORAGEKEY, storageData);
     setAccount(data);
+    setSignOut(false);
   }
 
   useEffect(() => {
@@ -137,6 +142,7 @@ const AppCartProvider = ({ children }) => {
         signOut,
         handleSignOut,
         createAccount,
+        handleLogIn,
       }}
     >
       {children}
