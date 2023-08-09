@@ -50,13 +50,13 @@ const Card = ({ product }) => {
           src={image}
           alt="headphones"
         />
-        <div className="h-2/5 w-full absolute left-0 bottom-0 bg-black/80 p-2 rounded-b-lg">
+        <div className="h-2/5 w-full absolute left-0 bottom-0 bg-black/80 p-3 rounded-b-lg overflow-y-auto">
           <span className="bottom-0 left-0 bg-white/60 rounded-lg text-white text-sm p-1">
             {category}
           </span>
-          <p className="text-white flex justify-between bg-blacks mt-2">
+          <p className="text-white flex flex-col gap-2 justify-between bg-blacks mt-2">
             <span className="text-xs font-light">{title}</span>
-            <span className="text-lg font-medium">${price}</span>
+            <span className="text-xl font-medium">${price}</span>
           </p>
         </div>
       </figure>
