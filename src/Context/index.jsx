@@ -29,19 +29,27 @@ const AppCartProvider = ({children}) => {
   // Filter products with OnSearch
   const [onSearchValue, setOnSearchValue] = useState('')
   const [productsFiltered, setProductsFiltered] = useState([])
+  
+  const [searchByCategory, setSearchByCategory] = useState('')
 
   const filterProdsByTitle = (products, title) => {
     return products?.filter(product => product.title.toLowerCase().includes(title))
   }
 
   useEffect(() => {
+    setIsLoadingProd(true)
     const fetchProducts = async () => {
-      const response =  await (await fetch('https://fakestoreapi.com/products')).json()
+      let response;
+      if(searchByCategory.length > 0){
+        response =  await (await fetch(`https://fakestoreapi.com/products/category/${searchByCategory}`)).json()
+      } else {
+        response =  await (await fetch('https://fakestoreapi.com/products')).json()
+      }
       setProducts(response)
       setIsLoadingProd(false)
     }
     fetchProducts()
-  }, [])
+  }, [searchByCategory])
 
   useEffect(() => {
     if(onSearchValue){
@@ -72,6 +80,8 @@ const AppCartProvider = ({children}) => {
       onSearchValue,
       setOnSearchValue,
       productsFiltered,
+      setProducts,
+      setSearchByCategory,
     }}>
       {children}
     </AppCartContext.Provider>

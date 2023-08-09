@@ -5,7 +5,7 @@ import { ShoppingCartIcon } from "@heroicons/react/24/solid";
 
 const Navbar = () => {
   const activeStyle = "underline underline-offset-4";
-  const { count, openCartDetail } = useContext(AppCartContext);
+  const { count, openCartDetail, setSearchByCategory } = useContext(AppCartContext);
   return (
     <nav className="flex justify-between items-center fixed z-10 w-full py-5 px-8 text-sm font-light top-0 bg-white drop-shadow-md">
       <ul className="flex items-center gap-3">
@@ -16,48 +16,45 @@ const Navbar = () => {
           <NavLink
             to="/"
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
+            onClick={() => setSearchByCategory('')}
           >
             All
           </NavLink>
         </li>
         <li>
           <NavLink
-            to="/clothes"
+            to="/category/jewelery"
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
+            onClick={() => setSearchByCategory('jewelery')}
           >
-            Clothes
+            Jewelery
           </NavLink>
         </li>
         <li>
           <NavLink
-            to="/electronics"
+            to="/category/electronics"
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
+            onClick={() => setSearchByCategory('electronics')}
           >
             Electronics
           </NavLink>
         </li>
         <li>
           <NavLink
-            to="/furnitures"
+            to="/category/men"
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
+            onClick={() => setSearchByCategory("men's clothing")}
           >
-            Furnitures
+            men's clothing
           </NavLink>
         </li>
         <li>
           <NavLink
-            to="/toys"
+            to="/category/women"
             className={({ isActive }) => (isActive ? activeStyle : undefined)}
+            onClick={() => setSearchByCategory("women's clothing")}
           >
-            Toys
-          </NavLink>
-        </li>
-        <li>
-          <NavLink
-            to="/others"
-            className={({ isActive }) => (isActive ? activeStyle : undefined)}
-          >
-            Others
+            women's clothing
           </NavLink>
         </li>
       </ul>
