@@ -71,7 +71,7 @@ const AppCartProvider = ({ children }) => {
     Storage.setItem(STORAGEKEY, data);
     setSignOut(false);
   }
-
+  // --
   const createAccount = (data) => {
     const storageData = Storage.getItem(STORAGEKEY);
     storageData.account = data;
@@ -79,7 +79,7 @@ const AppCartProvider = ({ children }) => {
     setAccount(data);
     setSignOut(false);
   }
-
+  // --
   useEffect(() => {
     initStorage();
   }, []);
