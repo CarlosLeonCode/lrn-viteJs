@@ -7,7 +7,7 @@
 
 This is a ecommerce, it uses an API to fetch products and save data in LocalStorage to can create orders and manage logic with data. Check the demo below,
 
-[![View site - Netlify](https://img.shields.io/badge/View_site-GH_Pages-2ea44f?style=for-the-badge)](https://carlosleoncode-shop-ecommerce.netlify.app)
+[![View site - Netlify](https://img.shields.io/badge/View_Netlify_Pages-2ea44f?style=for-the-badge)](https://carlosleoncode-shop-ecommerce.netlify.app)
 
 | *It is recommendable use a Laptop to get a best experience, this is temporal*
 
