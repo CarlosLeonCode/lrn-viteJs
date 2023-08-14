@@ -5,14 +5,14 @@
 
 🙌 Hi Coders!
 
-This is a ecommerce, it uses an API to fetch products and save data in LocalStorage to can create orders and manage logic with data.
+This is a ecommerce, it uses an API to fetch products and save data in LocalStorage to can create orders and manage logic with data. Check the demo below,
 
-You can check a live demo [Here](https://carlosleoncode-shop-ecommerce.netlify.app)
+[![View site - Netlify](https://img.shields.io/badge/View_site-GH_Pages-2ea44f?style=for-the-badge)](https://carlosleoncode-shop-ecommerce.netlify.app)
 
 | *It is recommendable use a Laptop to get a best experience, this is temporal*
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
 
-👨‍💻 🎼🎼🎼
+👨‍💻🎶
 
